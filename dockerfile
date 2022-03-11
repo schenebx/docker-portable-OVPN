@@ -8,7 +8,6 @@ RUN apt-get install -qy openvpn iptables curl easy-rsa
 # RUN iptables -A INPUT -i tap0 -j ACCEPT
 # RUN iptables -A INPUT -i br0 -j ACCEPT
 # RUN iptables -A FORWARD -i br0 -j ACCEPT
-RUN iptables -t nat -C POSTROUTING -s 10.8.0.0 -o tun0 -j MASQUERADE
 
 ARG OHOME=/etc/openvpn
 RUN mkdir -p $OHOME
@@ -35,7 +34,5 @@ RUN cp $(find . -type f -name "client.key") /out
 RUN cp $(find . -type f -name "client.crt") /out
 RUN cp $(find . -type f -name "ca.crt") /out
 
-# the `./server_conf/server.conf`
-ADD ./conf $OHOME
 RUN sed -i -e "s/<0w0_SERVER_HOST>/$1/g" $OHOME/client.example
-RUN cp $OHOME/client.example /out/client.ovpn
+RUN TEMPDIR="$(mktemp -d)"; cp $OHOME/client.example $TEMPDIR && mv $TEMPDIR/client.example /out/client.ovpn

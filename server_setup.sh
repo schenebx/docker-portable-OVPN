@@ -29,11 +29,13 @@ EOF
 
 chmod u+x $SWAP_ON_SCRIPT && bash $SWAP_ON_SCRIPT
 
-# volatile
-interface=enp1s0
-HOST_IP=$(ip addr | grep $interface | grep inet | awk -F " brd" '{print $1}' | awk -F "inet " '{print $2}' | cut -d '/' -f 1)
+cat << 'EOF' >> ~/.bashrc
+export HOST_NET_INTERFACE=enp1s0
 
-echo HOST_IP=$HOST_IP | tee -a /etc/environment
+HOST_IP=$(ip addr | grep $HOST_NET_INTERFACE | grep inet | awk -F " brd" '{print $1}' | awk -F "inet " '{print $2}' | cut -d '/' -f 1)
+export HOST_IP=$HOST_IP
+
+EOF
 
 # OPENVPN SETUP
 mkdir -p /srv/openvpn

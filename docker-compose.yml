@@ -2,7 +2,7 @@ version: "3"
 
 services:
   ##ref: https://github.com/shadowsocks/shadowsocks-libev/blob/master/docker/alpine/README.md
-  openvpn-docker:
+  openvpn:
     build: .
     cap_add:
       - NET_ADMIN
