@@ -3,11 +3,7 @@
 sleep 5s
 
 PKG_LISTS="docker docker-compose git vim tmux nmap sshuttle proxychains openvpn gobuster ffuf p7zip-full"
-if apt-get install -y $PKG_LISTS; then
-    echo "$PKG_LISTS installed"
-else
-    apt-get update -y && apt-get upgrade -y && apt-get install -y $PKG_LISTS
-fi
+apt update -y && apt upgrade -y && apt-get install -y $PKG_LISTS
 
 echo VISUAL=vim | tee -a ~/.bashrc
 echo EDITOR=vim | tee -a ~/.bashrc
