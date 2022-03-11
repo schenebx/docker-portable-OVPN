@@ -29,10 +29,11 @@ RUN cp $(find . -type f -name "server.key") $OHOME
 RUN cp $(find . -type f -name "server.crt") $OHOME
 
 # to the mounted volume
-RUN mkdir -p out
+RUN mkdir -p /out
 RUN cp $(find . -type f -name "client.key") /out
 RUN cp $(find . -type f -name "client.crt") /out
 RUN cp $(find . -type f -name "ca.crt") /out
 
+ADD ./conf $OHOME
 RUN sed -i -e "s/<0w0_SERVER_HOST>/$1/g" $OHOME/client.example
 RUN TEMPDIR="$(mktemp -d)"; cp $OHOME/client.example $TEMPDIR && mv $TEMPDIR/client.example /out/client.ovpn
