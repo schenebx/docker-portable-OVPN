@@ -1,2 +1,9 @@
-# docker-full-OVPN
-an OVPN server on docker container + full docker server setup script
+# docker-portable-OVPN
+
+An OVPN server that is:
+
+- without leak
+- customizable
+- portable
+- stable
+

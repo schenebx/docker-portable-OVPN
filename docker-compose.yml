@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  ##ref: https://github.com/shadowsocks/shadowsocks-libev/blob/master/docker/alpine/README.md
+  openvpn-docker:
+    build: .
+    cap_add:
+      - NET_ADMIN
+    container_name: openvpn
+    ports:
+      - "1194:1194/udp"
+    volumes:
+      - /out:/out
+    environment:
+      - HOST_IP=${HOST_IP}
+    restart: always
+    command: ["openvpn", "--config", "/etc/openvpn/server.conf"]
