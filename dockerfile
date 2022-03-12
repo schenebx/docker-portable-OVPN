@@ -28,13 +28,6 @@ RUN cp $(find $CADIR -type f -name "server.key") $OHOME
 RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
 RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
 
-# to solve the following error:
-# ERROR: Cannot open TUN/TAP dev /dev/net/tun: No such file or directory (errno=2)
-# https://github.com/torvalds/linux/blob/master/Documentation/admin-guide/devices.txt
-RUN mkdir -p /dev/net && \
-    mknod /dev/net/tun c 100 200 && \
-    chmod 600 /dev/net/tun
-
 # server.conf && client.example
 ADD ./conf $OHOME
 ADD ./bin /usr/local/bin

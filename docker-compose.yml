@@ -6,6 +6,8 @@ services:
     build: .
     cap_add:
       - NET_ADMIN
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
     container_name: openvpn
     ports:
       - "1194:1194/udp"
