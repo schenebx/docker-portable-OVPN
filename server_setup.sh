@@ -2,7 +2,7 @@
 
 sleep 5s
 
-PKG_LISTS="docker docker-compose git vim tmux nmap sshuttle proxychains openvpn gobuster ffuf p7zip-full"
+PKG_LISTS="docker docker-compose git vim tmux iproute2 p7zip-full"
 apt update -y && apt upgrade -y && apt-get install -y $PKG_LISTS
 
 echo VISUAL=vim | tee -a ~/.bashrc
