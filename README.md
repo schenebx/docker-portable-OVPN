@@ -26,9 +26,10 @@ docker-compose down
 - on the client
 
 ```sh
-# get the .gz file
+# get the .gz file, then to unzip it:
 tar xvf *.gz
 
+# to start the client
 sudo openvpn client.ovpn
 ```
 
