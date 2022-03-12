@@ -7,6 +7,30 @@ An OVPN server that is:
 - portable
 - stable
 
+# Usage:
+
+- on the server
+
+```sh
+# the client cred will be outputted to here
+mkdir -p /out
+
+# to start the server
+docker-compose build
+docker-compose up
+
+# to shut down the server
+docker-compose down
+```
+
+- on the client
+
+```sh
+# get the .gz file
+tar xvf *.gz
+
+sudo openvpn client.ovpn
+```
 
 ## CREDIT:
 
