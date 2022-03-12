@@ -7,6 +7,7 @@ HOST_IP=$HOST_IP
 cp $(find $CADIR -type f -name "client.key") $MOUNTED_HOST_DIR
 cp $(find $CADIR -type f -name "client.crt") $MOUNTED_HOST_DIR
 cp $(find $CADIR -type f -name "ca.crt") $MOUNTED_HOST_DIR
+cp $(find $CADIR -type f -name "ta.key") $MOUNTED_HOST_DIR
 
 sed -i -e "s/<0w0_SERVER_HOST>/$HOST_IP/g" $OHOME/client.example
 cp $OHOME/client.example $MOUNTED_HOST_DIR/client.ovpn

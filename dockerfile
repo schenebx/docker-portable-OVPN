@@ -10,10 +10,11 @@ RUN apt-get install -qy openvpn iptables curl easy-rsa
 # RUN iptables -A FORWARD -i br0 -j ACCEPT
 
 ARG OHOME=/etc/openvpn
+ARG CADIR=/etc/openvpn-ca
 RUN mkdir -p $OHOME
 
-RUN make-cadir /etc/openvpn-ca
-WORKDIR /etc/openvpn-ca
+RUN make-cadir $CADIR
+WORKDIR $CADIR
 RUN ./easyrsa init-pki
 # CLI takes no options
 RUN dd if=/dev/urandom of=pki/.rnd bs=256 count=1
@@ -22,11 +23,13 @@ RUN ./easyrsa build-ca nopass
 RUN ./easyrsa build-server-full server nopass
 RUN ./easyrsa build-client-full client nopass
 RUN ./easyrsa gen-dh nopass
+RUN openvpn --genkey --secret $CADIR/ta.key
 
-RUN cp $(find . -type f -name "ca.crt") $OHOME
-RUN cp $(find . -type f -name "dh.pem") $OHOME
-RUN cp $(find . -type f -name "server.key") $OHOME
-RUN cp $(find . -type f -name "server.crt") $OHOME
+RUN cp $(find $CADIR -type f -name "ca.crt") $OHOME
+RUN cp $(find $CADIR -type f -name "dh.pem") $OHOME
+RUN cp $(find $CADIR -type f -name "server.key") $OHOME
+RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
+RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
 
 # server.conf && client.example
 ADD ./conf $OHOME
