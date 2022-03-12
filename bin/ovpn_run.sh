@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CADIR=/etc/openvpn-ca
 OHOME=/etc/openvpn
 MOUNTED_HOST_DIR=/out
