@@ -14,7 +14,7 @@ cp $(find $CADIR -type f -name "client.crt") $TMPFS
 cp $(find $CADIR -type f -name "ca.crt") $TMPFS
 cp $(find $CADIR -type f -name "ta.key") $TMPFS
 sed -i -e "s/<0w0_SERVER_HOST>/$HOST_IP/g" $OHOME/client.example
-cp $OHOME/client.example $MOUNTED_HOST_DIR/client.ovpn
+cp $OHOME/client.example $TMPFS/client.ovpn
 
 rm -f $MOUNTED_HOST_DIR/conn.gz
 tar cvfz $MOUNTED_HOST_DIR/conn.gz -C $TMPFS .
