@@ -15,7 +15,7 @@ RUN echo set_var EASYRSA_BATCH "1" | tee -a vars
 RUN ./easyrsa build-ca nopass
 RUN ./easyrsa build-server-full server nopass
 RUN ./easyrsa build-client-full client nopass
-RUN ./easyrsa gen-dh nopass
+RUN ./easyrsa gen-dh
 RUN openvpn --genkey --secret $CADIR/ta.key
 
 # SERVER keys are copied at build time
