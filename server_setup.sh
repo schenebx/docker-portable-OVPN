@@ -59,6 +59,6 @@ HOST_NET_INTERFACE=enp1s0
 export HOST_IP=$(ip addr | grep $HOST_NET_INTERFACE | grep inet | awk -F " brd" '{print $1}' | awk -F "inet " '{print $2}' | cut -d '/' -f 1)
 
 # refresh the ENVs
-bash && cd /srv/docker-portable-OVPN
+bash && cd $D0
 
 docker-compose build && docker-compose up -d
