@@ -12,6 +12,10 @@ An OVPN server that is:
 - on the server
 
 ```sh
+# RUN `server_setup.sh` when setting up the server.
+# Assume UBUNTU 20.04
+bash ./server_setup.sh && bash
+
 # the client cred will be outputted to here
 mkdir -p /out
 
