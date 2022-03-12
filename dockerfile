@@ -3,11 +3,7 @@
 
 FROM ubuntu:focal
 RUN apt update -y -q
-RUN apt-get install -qy openvpn iptables curl easy-rsa
-# RUN apt-get install -qy openvpn iptables curl bridge-utils
-# RUN iptables -A INPUT -i tap0 -j ACCEPT
-# RUN iptables -A INPUT -i br0 -j ACCEPT
-# RUN iptables -A FORWARD -i br0 -j ACCEPT
+RUN apt-get install -qy openvpn iptables curl easy-rsa iproute2
 
 ARG OHOME=/etc/openvpn
 ARG CADIR=/etc/openvpn-ca
@@ -32,17 +28,14 @@ RUN cp $(find $CADIR -type f -name "server.key") $OHOME
 RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
 RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
 
+# to solve the following error:
+# ERROR: Cannot open TUN/TAP dev /dev/net/tun: No such file or directory (errno=2)
+# https://github.com/torvalds/linux/blob/master/Documentation/admin-guide/devices.txt
+RUN mkdir -p /dev/net && \
+    mknod /dev/net/tun c 100 200 && \
+    chmod 600 /dev/net/tun
+
 # server.conf && client.example
 ADD ./conf $OHOME
 ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
-
-# to the mounted volume
-# RUN mkdir -p /out
-# RUN cp $(find . -type f -name "client.key") /out
-# RUN cp $(find . -type f -name "client.crt") /out
-# RUN cp $(find . -type f -name "ca.crt") /out
-
-# ADD ./conf $OHOME
-# RUN sed -i -e "s/<0w0_SERVER_HOST>/$1/g" $OHOME/client.example
-# RUN TEMPDIR="$(mktemp -d)"; cp $OHOME/client.example $TEMPDIR && mv $TEMPDIR/client.example /out/client.ovpn

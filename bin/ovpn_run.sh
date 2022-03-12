@@ -6,6 +6,8 @@ MOUNTED_HOST_DIR=/out
 HOST_IP=$HOST_IP
 CONTAINER_NET_INTERFACE=eth0
 
+mkdir -p $MOUNTED_HOST_DIR
+
 cp $(find $CADIR -type f -name "client.key") $MOUNTED_HOST_DIR
 cp $(find $CADIR -type f -name "client.crt") $MOUNTED_HOST_DIR
 cp $(find $CADIR -type f -name "ca.crt") $MOUNTED_HOST_DIR
