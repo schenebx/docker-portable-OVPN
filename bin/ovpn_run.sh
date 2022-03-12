@@ -3,7 +3,6 @@ OHOME=/etc/openvpn
 MOUNTED_HOST_DIR=/out
 HOST_IP=$HOST_IP
 
-# mkdir -p /out
 cp $(find $CADIR -type f -name "client.key") $MOUNTED_HOST_DIR
 cp $(find $CADIR -type f -name "client.crt") $MOUNTED_HOST_DIR
 cp $(find $CADIR -type f -name "ca.crt") $MOUNTED_HOST_DIR

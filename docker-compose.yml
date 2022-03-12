@@ -14,4 +14,4 @@ services:
     environment:
       - HOST_IP=${HOST_IP}
     restart: always
-    command: ["openvpn", "--config", "/etc/openvpn/server.conf"]
+    command: ["ovpn_run.sh"]

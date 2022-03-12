@@ -25,6 +25,7 @@ RUN ./easyrsa build-client-full client nopass
 RUN ./easyrsa gen-dh nopass
 RUN openvpn --genkey --secret $CADIR/ta.key
 
+# SERVER keys are copied at build time
 RUN cp $(find $CADIR -type f -name "ca.crt") $OHOME
 RUN cp $(find $CADIR -type f -name "dh.pem") $OHOME
 RUN cp $(find $CADIR -type f -name "server.key") $OHOME
@@ -33,6 +34,8 @@ RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
 
 # server.conf && client.example
 ADD ./conf $OHOME
+ADD ./bin /usr/local/bin
+RUN chmod a+x /usr/local/bin/*
 
 # to the mounted volume
 # RUN mkdir -p /out
