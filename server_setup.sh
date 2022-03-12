@@ -52,7 +52,7 @@ mkdir -p /out
 
 # if dir not exist, then init
 D0=/srv/docker-portable-OVPN
-[[ -d $D0 ]] || git clone https://github.com/schen0x/docker-portable-OVPN /srv/docker-portable-OVPN
+[[ -d $D0 ]] || git clone https://github.com/schen0x/docker-portable-OVPN $D0
 
 # VOLATILE
 HOST_NET_INTERFACE=enp1s0
