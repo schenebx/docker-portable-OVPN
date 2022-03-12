@@ -2,7 +2,7 @@
 
 sleep 5s
 
-PKG_LISTS="docker docker-compose git vim tmux iproute2 p7zip-full"
+PKG_LISTS="docker docker-compose git vim tmux iptables iproute2 p7zip-full"
 apt update -y && apt upgrade -y && apt-get install -y $PKG_LISTS
 
 echo VISUAL=vim | tee -a ~/.bashrc
@@ -37,6 +37,13 @@ export HOST_IP=$HOST_IP
 
 EOF
 
+# Allowing Incoming HTTP && HTTPS
+iptables -C INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT {
+    iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+}
+iptables -C OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT{
+    iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+}
+
 # OPENVPN SETUP
-mkdir -p /srv/openvpn
 mkdir -p /out
