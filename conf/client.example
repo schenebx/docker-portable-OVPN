@@ -80,7 +80,7 @@ persist-tun
 ;mute-replay-warnings
 
 # this file should be chmod 600
-askpass client-key-pass
+# askpass client-key-pass
 # SSL/TLS parms.
 # See the server config file for more
 # description.  It's best to use

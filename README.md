@@ -7,3 +7,8 @@ An OVPN server that is:
 - portable
 - stable
 
+
+## CREDIT:
+
+- https://github.com/jpetazzo/dockvpn
+- https://github.com/kylemanna/docker-openvpn

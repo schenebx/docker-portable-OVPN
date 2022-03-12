@@ -1,6 +1,3 @@
-# Original credit: https://github.com/jpetazzo/dockvpn
-# Original credit: https://github.com/kylemanna/docker-openvpn
-
 FROM ubuntu:focal
 RUN apt update -y -q
 RUN apt-get install -qy openvpn iptables curl easy-rsa iproute2
@@ -12,8 +9,8 @@ RUN mkdir -p $OHOME
 RUN make-cadir $CADIR
 WORKDIR $CADIR
 RUN ./easyrsa init-pki
-# CLI takes no options
 RUN dd if=/dev/urandom of=pki/.rnd bs=256 count=1
+# run in batch mode, CLI takes no options
 RUN echo set_var EASYRSA_BATCH "1" | tee -a vars
 RUN ./easyrsa build-ca nopass
 RUN ./easyrsa build-server-full server nopass
