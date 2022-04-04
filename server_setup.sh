@@ -29,15 +29,18 @@ EOF
 
 chmod u+x $SWAP_ON_SCRIPT && bash $SWAP_ON_SCRIPT
 
-# VOLATILE
-cat << 'EOF' >> ~/.bashrc
-export HOST_NET_INTERFACE=enp1s0
+# OPENVPN SETUP
+mkdir -p /out
 
-HOST_IP=$(ip addr | grep $HOST_NET_INTERFACE | grep inet | awk -F " brd" '{print $1}' | awk -F "inet " '{print $2}' | cut -d '/' -f 1)
-export HOST_IP=$HOST_IP
+# if dir not exist, then init
+D0=/srv/docker-portable-OVPN
+[[ -d $D0 ]] || git clone https://github.com/schen0x/docker-portable-OVPN $D0
 
-cd /srv/docker-portable-OVPN
-EOF
+# Allowing SSH
+iptables -C INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT 2>/dev/null || {
+    iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+    iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+}
 
 # Allowing Incoming HTTP && HTTPS
 iptables -C INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT 2>/dev/null || {
@@ -47,12 +50,21 @@ iptables -C OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ES
     iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 }
 
-# OPENVPN SETUP
-mkdir -p /out
+# Allowing OVPN connection
+iptables -C INPUT -i eth0 -m state --state NEW -p udp --dport 1194 -j ACCEPT 2>/dev/null || {
+    iptables -A INPUT -i eth0 -m state --state NEW -p udp --dport 1194 -j ACCEPT
+}
 
-# if dir not exist, then init
-D0=/srv/docker-portable-OVPN
-[[ -d $D0 ]] || git clone https://github.com/schen0x/docker-portable-OVPN $D0
+
+# VOLATILE
+cat << 'EOF' >> ~/.bashrc
+export HOST_NET_INTERFACE=enp1s0
+
+HOST_IP=$(ip addr | grep $HOST_NET_INTERFACE | grep inet | awk -F " brd" '{print $1}' | awk -F "inet " '{print $2}' | cut -d '/' -f 1)
+export HOST_IP=$HOST_IP
+
+cd /srv/docker-portable-OVPN
+EOF
 
 # VOLATILE
 HOST_NET_INTERFACE=enp1s0
