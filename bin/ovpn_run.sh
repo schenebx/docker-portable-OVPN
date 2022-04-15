@@ -18,8 +18,8 @@ cp $(find $CADIR -type f -name "client.key") $TMPFS
 cp $(find $CADIR -type f -name "client.crt") $TMPFS
 cp $(find $CADIR -type f -name "ca.crt") $TMPFS
 cp $(find $CADIR -type f -name "ta.key") $TMPFS
-sed -i -e "s/<0w0_SERVER_HOST>/$HOST_IP/g" $OHOME/client.example
-cp $OHOME/client.example $TMPFS/client.ovpn
+cp $OHOME/conf/client.example $TMPFS/client.ovpn
+sed -i -e "s/<0w0_SERVER_HOST>/$HOST_IP/g" $TMPFS/client.ovpn
 
 rm -f $MOUNTED_HOST_DIR/conn.gz
 tar cvfz $MOUNTED_HOST_DIR/conn.gz -C $TMPFS .
@@ -28,4 +28,4 @@ tar cvfz $MOUNTED_HOST_DIR/conn.gz -C $TMPFS .
 iptables -t nat -C POSTROUTING -s $OVPN_SUBNET -o $CONTAINER_NET_INTERFACE -j MASQUERADE 2>/dev/null || {
     iptables -t nat -A POSTROUTING -s $OVPN_SUBNET -o $CONTAINER_NET_INTERFACE -j MASQUERADE
 }
-openvpn --config $OHOME/server.conf
+openvpn --config $OHOME/conf/server.conf

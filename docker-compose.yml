@@ -12,6 +12,7 @@ services:
     ports:
       - "1194:1194/udp"
     volumes:
+      - ./conf:/etc/openvpn/conf
       - /out:/out
     environment:
       - HOST_IP=${HOST_IP}

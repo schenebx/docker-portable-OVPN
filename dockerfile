@@ -26,6 +26,6 @@ RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
 RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
 
 # server.conf && client.example
-ADD ./conf $OHOME
+# ADD ./conf $OHOME
 ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*

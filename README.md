@@ -12,12 +12,12 @@ An OVPN server that is:
 - on the server
 
 ```sh
-# RUN `server_setup.sh` when setting up the server.
+# UPDATE the `#VOLATILE` section in the server_setup.sh
+# THEN, RUN `server_setup.sh` on the server.
 # Assume UBUNTU 20.04
 bash ./server_setup.sh && bash
 
-# the client cred will be outputted to here
-mkdir -p /out
+# the client cred will be outputted to /out
 
 # to start the server
 docker-compose build
