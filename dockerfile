@@ -16,6 +16,14 @@ RUN ./easyrsa build-ca nopass
 RUN ./easyrsa build-server-full server nopass
 RUN ./easyrsa gen-dh
 RUN openvpn --genkey --secret $CADIR/ta.key
+
+# SERVER keys are copied at build time
+RUN cp $(find $CADIR -type f -name "ca.crt") $OHOME
+RUN cp $(find $CADIR -type f -name "dh.pem") $OHOME
+RUN cp $(find $CADIR -type f -name "server.key") $OHOME
+RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
+RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
+
 RUN ./easyrsa build-client-full client0 nopass
 RUN ./easyrsa build-client-full client1 nopass
 RUN ./easyrsa build-client-full client2 nopass
@@ -28,14 +36,7 @@ RUN ./easyrsa build-client-full client8 nopass
 RUN ./easyrsa build-client-full client9 nopass
 RUN ./easyrsa build-client-full client10 nopass
 
-# SERVER keys are copied at build time
-RUN cp $(find $CADIR -type f -name "ca.crt") $OHOME
-RUN cp $(find $CADIR -type f -name "dh.pem") $OHOME
-RUN cp $(find $CADIR -type f -name "server.key") $OHOME
-RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
-RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
-
-# server.conf && client.example
+## server.conf && client.example
 # ADD ./conf $OHOME
 ADD ./bin /usr/local/bin
 RUN chmod a+x /usr/local/bin/*
