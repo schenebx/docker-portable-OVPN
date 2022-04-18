@@ -36,6 +36,8 @@ RUN ./easyrsa build-client-full client8 nopass
 RUN ./easyrsa build-client-full client9 nopass
 RUN ./easyrsa build-client-full client10 nopass
 
+RUN sysctl -w net.ipv4.ip_forward=1
+
 ## server.conf && client.example
 # ADD ./conf $OHOME
 ADD ./bin /usr/local/bin
