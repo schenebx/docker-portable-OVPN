@@ -14,9 +14,19 @@ RUN dd if=/dev/urandom of=pki/.rnd bs=256 count=1
 RUN echo set_var EASYRSA_BATCH "1" | tee -a vars
 RUN ./easyrsa build-ca nopass
 RUN ./easyrsa build-server-full server nopass
-RUN ./easyrsa build-client-full client nopass
 RUN ./easyrsa gen-dh
 RUN openvpn --genkey --secret $CADIR/ta.key
+RUN ./easyrsa build-client-full client0 nopass
+RUN ./easyrsa build-client-full client1 nopass
+RUN ./easyrsa build-client-full client2 nopass
+RUN ./easyrsa build-client-full client3 nopass
+RUN ./easyrsa build-client-full client4 nopass
+RUN ./easyrsa build-client-full client5 nopass
+RUN ./easyrsa build-client-full client6 nopass
+RUN ./easyrsa build-client-full client7 nopass
+RUN ./easyrsa build-client-full client8 nopass
+RUN ./easyrsa build-client-full client9 nopass
+RUN ./easyrsa build-client-full client10 nopass
 
 # SERVER keys are copied at build time
 RUN cp $(find $CADIR -type f -name "ca.crt") $OHOME
