@@ -36,6 +36,8 @@ RUN ./easyrsa build-client-full client8 nopass
 RUN ./easyrsa build-client-full client9 nopass
 RUN ./easyrsa build-client-full client10 nopass
 
+# This param may not be writable on some VM platform (e.g. Azure) and thus has no effect.
+# Change the `ip_forward` option in the VM Service Provider's console if necessary.
 RUN sysctl -w net.ipv4.ip_forward=1
 
 ## server.conf && client.example
