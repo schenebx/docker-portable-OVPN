@@ -1,12 +1,14 @@
 #!/bin/bash
 
+# as root
+
 sleep 5s
 
 PKG_LISTS="docker docker-compose git vim tmux iptables iproute2 p7zip-full"
 apt update -y && apt upgrade -y && apt-get install -y $PKG_LISTS
 
-echo VISUAL=vim | tee -a ~/.bashrc
-echo EDITOR=vim | tee -a ~/.bashrc
+echo VISUAL=vim | tee -a $HOME/.bashrc
+echo EDITOR=vim | tee -a $HOME/.bashrc
 
 cat <<'EOF' > /root/.vimrc
 colorscheme desert
@@ -55,6 +57,11 @@ D0=/srv/docker-portable-OVPN
 #     iptables -A INPUT -i eth0 -m state --state NEW -p udp --dport 1194 -j ACCEPT
 # }
 
+
+# as user
+
+echo VISUAL=vim | tee -a $HOME/.bashrc
+echo EDITOR=vim | tee -a $HOME/.bashrc
 
 # VOLATILE
 cat << 'EOF' >> ~/.bashrc
