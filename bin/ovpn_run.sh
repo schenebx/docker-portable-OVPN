@@ -32,6 +32,9 @@ for clientKeyABS in $(find $CADIR -type f -name "client*.key"); do
     tar cvfz $MOUNTED_HOST_DIR/$clientName.gz -C $TMPFS .
 done
 
+# the 2FA imgs
+cp $OHOME/2FA/*.png $MOUNTED_HOST_DIR
+
 tar cvfz $MOUNTED_HOST_DIR/all.gz -C $MOUNTED_HOST_DIR .
 
 # Check if rule exist. Error if not exist. Add rule on error

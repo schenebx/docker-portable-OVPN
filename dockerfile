@@ -1,6 +1,7 @@
 FROM ubuntu:focal
 RUN apt update -y -q
-RUN apt-get install -qy openvpn iptables curl easy-rsa iproute2
+RUN apt-get install -qy openvpn iptables curl easy-rsa iproute2 oathtool python3 python3-pip nodejs
+RUN pip3 install pillow qrcode
 
 ARG OHOME=/etc/openvpn
 ARG CADIR=/etc/openvpn-ca
@@ -24,7 +25,6 @@ RUN cp $(find $CADIR -type f -name "server.key") $OHOME
 RUN cp $(find $CADIR -type f -name "server.crt") $OHOME
 RUN cp $(find $CADIR -type f -name "ta.key") $OHOME
 
-RUN ./easyrsa build-client-full client0 nopass
 RUN ./easyrsa build-client-full client1 nopass
 RUN ./easyrsa build-client-full client2 nopass
 RUN ./easyrsa build-client-full client3 nopass
@@ -35,6 +35,15 @@ RUN ./easyrsa build-client-full client7 nopass
 RUN ./easyrsa build-client-full client8 nopass
 RUN ./easyrsa build-client-full client9 nopass
 RUN ./easyrsa build-client-full client10 nopass
+RUN ./easyrsa build-client-full client11 nopass
+RUN ./easyrsa build-client-full client12 nopass
+
+# RUN DIGEST=$(LC_ALL=C tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 40 | sha256sum | cut -d ' ' -f 1) && \
+RUN mkdir -p $OHOME/2FA
+WORKDIR $OHOME/2FA
+ADD ./plugins .
+RUN chmod +x *.sh *.py
+RUN oauthSecrets=$OHOME/2FA/oauth.secrets && echo > $oauthSecrets && ./2FA_gen_secrets.sh 12 $oauthSecrets && ./2FA_secret_to_img.sh $oauthSecrets
 
 # This param may not be writable on some VM platform (e.g. Azure) and thus has no effect.
 # Change the `ip_forward` option in the VM Service Provider's console if necessary.

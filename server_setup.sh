@@ -58,11 +58,10 @@ D0=/srv/docker-portable-OVPN
 # }
 
 
-# as user
-
 echo VISUAL=vim | tee -a $HOME/.bashrc
 echo EDITOR=vim | tee -a $HOME/.bashrc
 
+# still as root, since we run docker as root which use the ENVs of root.
 # VOLATILE
 cat << 'EOF' >> ~/.bashrc
 export HOST_NET_INTERFACE=eth0
