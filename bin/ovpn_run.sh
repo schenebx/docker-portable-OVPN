@@ -29,13 +29,15 @@ for clientKeyABS in $(find $CADIR -type f -name "client*.key"); do
     cp $OHOME/conf/client.example $TMPFS/$clientName.ovpn
     sed -i -e "s/<0w0_SERVER_HOST>/$HOST_IP/g" $TMPFS/$clientName.ovpn
     sed -i -e "s/<0w0_CLIENT_NAME>/$clientName/g" $TMPFS/$clientName.ovpn # $clientName.ovpn
-    tar cvfz $MOUNTED_HOST_DIR/$clientName.gz -C $TMPFS .
+    # tar cvfz $MOUNTED_HOST_DIR/$clientName.gz -C $TMPFS .
+    zip -r -j $MOUNTED_HOST_DIR/$clientName.gz $TMPFS
 done
 
 # the 2FA imgs
 cp $OHOME/2FA/*.png $MOUNTED_HOST_DIR
 
-tar cvfz $MOUNTED_HOST_DIR/all.gz -C $MOUNTED_HOST_DIR .
+# tar cvfz $MOUNTED_HOST_DIR/all.gz -C $MOUNTED_HOST_DIR .
+zip -r -j $MOUNTED_HOST_DIR/all.gz $MOUNTED_HOST_DIR
 
 # Check if rule exist. Error if not exist. Add rule on error
 iptables -t nat -C POSTROUTING -s $OVPN_SUBNET -o $CONTAINER_NET_INTERFACE -j MASQUERADE 2>/dev/null || {

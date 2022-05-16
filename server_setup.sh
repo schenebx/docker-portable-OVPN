@@ -4,7 +4,7 @@
 
 sleep 5s
 
-PKG_LISTS="docker docker-compose git vim tmux iptables iproute2 p7zip-full"
+PKG_LISTS="docker docker-compose git vim tmux iptables iproute2 p7zip-full zip"
 apt update -y && apt upgrade -y && apt-get install -y $PKG_LISTS
 
 echo VISUAL=vim | tee -a $HOME/.bashrc
