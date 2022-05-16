@@ -1,7 +1,7 @@
 FROM ubuntu:focal
 RUN apt update -y -q
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
-RUN apt-get install -q -y openvpn iptables curl easy-rsa iproute2 oathtool python3 python3-pip nodejs
+RUN apt-get install -q -y openvpn iptables curl easy-rsa iproute2 oathtool python3 python3-pip nodejs zip
 RUN yes | pip3 install pillow qrcode
 
 ARG OHOME=/etc/openvpn
