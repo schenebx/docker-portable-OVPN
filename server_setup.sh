@@ -81,4 +81,6 @@ export HOST_IP=<insert_host_ip>
 # refresh the ENVs
 bash && cd $D0
 
-docker-compose build && docker-compose up -d
+sudo -i 
+# [[ ! -z $HOST_IP ]] && echo "WARN: HOST_IP is not set!" || echo "HOST_IP=$HOST_IP"
+# docker-compose build && docker-compose up -d
