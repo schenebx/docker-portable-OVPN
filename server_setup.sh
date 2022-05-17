@@ -57,13 +57,9 @@ D0=/srv/docker-portable-OVPN
 #     iptables -A INPUT -i eth0 -m state --state NEW -p udp --dport 1194 -j ACCEPT
 # }
 
-
-echo VISUAL=vim | tee -a $HOME/.bashrc
-echo EDITOR=vim | tee -a $HOME/.bashrc
-
 # still as root, since we run docker as root which use the ENVs of root.
 # VOLATILE
-cat << 'EOF' >> ~/.bashrc
+cat << 'EOF' >> /root/.bashrc
 export HOST_NET_INTERFACE=eth0
 export HOST_IP=<insert_host_ip>
 
