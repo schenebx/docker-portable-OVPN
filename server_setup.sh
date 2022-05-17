@@ -78,8 +78,7 @@ HOST_NET_INTERFACE=eth0
 # export HOST_IP=$(ip addr | grep $HOST_NET_INTERFACE | grep inet | awk -F " brd" '{print $1}' | awk -F "inet " '{print $2}' | cut -d '/' -f 1)
 export HOST_IP=<insert_host_ip>
 
-# refresh the ENVs
-bash && cd $D0
+cd $D0
 # docker-compose build && docker-compose up -d
 [[ ! -z $HOST_IP ]] && { echo "HOST_IP=$HOST_IP, setting up ovpn docker in the background, check the progress with `docker-compose logs`" && docker-compose build && docker-compose up -d
 } || echo "WARN: HOST_IP is not set!"
