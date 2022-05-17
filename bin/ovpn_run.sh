@@ -14,7 +14,7 @@ OVPN_SUBNET=10.8.0.0/24
 CADIR=/etc/openvpn-ca
 OHOME=/etc/openvpn
 MOUNTED_HOST_DIR=/out
-CONTAINER_NET_INTERFACE=eth0
+[[ ! -z $HOST_NET_INTERFACE ]] && CONTAINER_NET_INTERFACE=$HOST_NET_INTERFACE || CONTAINER_NET_INTERFACE=eth0
 
 CA_FILE=$(find $CADIR -type f -name "ca.crt")
 TA_FILE=$(find $CADIR -type f -name "ta.key")

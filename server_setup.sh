@@ -80,7 +80,6 @@ export HOST_IP=<insert_host_ip>
 
 # refresh the ENVs
 bash && cd $D0
-
-sudo -i 
-# [[ ! -z $HOST_IP ]] && echo "WARN: HOST_IP is not set!" || echo "HOST_IP=$HOST_IP"
 # docker-compose build && docker-compose up -d
+[[ ! -z $HOST_IP ]] && { echo "HOST_IP=$HOST_IP, setting up ovpn docker in the background, check the progress with `docker-compose logs`" && docker-compose build && docker-compose up -d
+} || echo "WARN: HOST_IP is not set!"
