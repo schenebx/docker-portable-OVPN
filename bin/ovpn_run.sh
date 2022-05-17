@@ -6,7 +6,7 @@ HOST_IP=$HOST_IP
 [[ -z ${HOST_IP} ]] && read -p "Enter the public ip of this instance: " HOST_IP
 
 mkdir -p $MOUNTED_HOST_DIR
-rm -f $MOUNTED_HOST_DIR/*.gz
+rm -f $MOUNTED_HOST_DIR/{*.zip,*.gz,*.png}
 
 # defined in `server.conf`
 OVPN_SUBNET=10.8.0.0/24
